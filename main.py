@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-from modules.TextGeneration import text_generation_page 
+from modules.Pages import text_generation_page 
 
 
 def main():
