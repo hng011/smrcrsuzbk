@@ -4,7 +4,7 @@ from .Utils import generate_text
 def text_generation_page():
     st.title("Story Generation Page")
     user_prompt = st.text_area("✍️ Enter your story prompt:", height=100)
-    min_par, max_par = 1, 10
+    min_par, max_par = 1, 5
     paragraph = st.number_input("📃 Number of paragraph: ", min_value=min_par, max_value=max_par, format='%d')
     system_prompt = f"You are a creative and imaginative story writer. Write vivid, engaging, and coherent stories based on the user prompt. Include a creative title. Write the story in exactly {paragraph} paragraphs. Do not include any explanation or commentary. ONLY USE ENGLISH LANGUAGE"
     
