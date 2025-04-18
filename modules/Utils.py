@@ -1,5 +1,4 @@
 from .__init__ import *
-from streamlit.components.v1 import html
 
 def generate_text_from_transformer(model=""):
     ...
@@ -25,15 +24,13 @@ def generate_text(system_prompt, user_prompt, model="meta-llama/llama-3.3-70b-in
             
             
             if not erres:
-                return (str(response.json()["choices"][0]["message"]["content"]).strip(), model)
+                return (str(response.json()["choices"][0]["message"]["content"]).strip(), model, "")
             else:
-                logerr = f"LOG ERR OR: {model} | {erres}"
-                html(f"<script>console.log(\"{logerr}\");</script>", height=0,)
-                
                 res, status, model_name = call_g(system_prompt, user_prompt)
                 if status == 200:
                     print(status)
-                    return (res, model_name)
+                    logerr = f"LOG ERR OR: {model} | {erres}"                
+                    return (res, model_name, logerr)
             
         except Exception as e:
             return e       

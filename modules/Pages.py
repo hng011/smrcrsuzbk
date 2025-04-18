@@ -1,5 +1,6 @@
 from .__init__ import *
 from .Utils import generate_text
+from streamlit.components.v1 import html
 
 def text_generation_page():
     st.title("Story Generation Page")
@@ -23,7 +24,7 @@ def text_generation_page():
                         system_prompt=system_prompt
                     )
                     
-                    res, model = generate_text(
+                    res, model, l = generate_text(
                         user_prompt=f"Write a story about: {user_prompt}",
                         system_prompt=system_prompt
                     )
@@ -42,5 +43,6 @@ def text_generation_page():
                 is_end = True
         
         if is_end: 
+            html(f"<script>console.log(\"{l}\");</script>", height=0)
             st.write(f"⏳ Response Time: {end_t:.2f} seconds")
             st.write(f"🤖 Model: {model}")
