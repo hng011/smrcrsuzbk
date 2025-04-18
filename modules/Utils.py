@@ -22,15 +22,16 @@ def generate_text(system_prompt, user_prompt, model="meta-llama/llama-3.3-70b-in
             
             erres = response.json()["error"]["message"]
             
-            
             if not erres:
                 return (str(response.json()["choices"][0]["message"]["content"]).strip(), model, "")
-            else:
+            elif erres:
                 res, status, model_name = call_g(system_prompt, user_prompt)
                 if status == 200:
                     print(status)
                     logerr = f"LOG ERR OR: {model} | {erres}"                
                     return (res, model_name, logerr)
+                else:
+                    return (res, model, 0)
             
         except Exception as e:
             return e       
