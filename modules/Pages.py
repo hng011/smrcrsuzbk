@@ -1,5 +1,5 @@
 from .__init__ import *
-from .Utils import call_openrouter
+from .Utils import generate_text
 
 def text_generation_page():
     st.title("Story Generation Page")
@@ -18,7 +18,12 @@ def text_generation_page():
             else:
                 with st.spinner("Generating Story... ⭐"):
                     start_t = time.time()
-                    res = call_openrouter(
+                    generate_text(
+                        user_prompt=f"Write a story about: {user_prompt}",
+                        system_prompt=system_prompt
+                    )
+                    
+                    res, model = generate_text(
                         user_prompt=f"Write a story about: {user_prompt}",
                         system_prompt=system_prompt
                     )
@@ -38,3 +43,4 @@ def text_generation_page():
         
         if is_end: 
             st.write(f"⏳ Response Time: {end_t:.2f} seconds")
+            st.write(f"🤖 Model: {model}")
