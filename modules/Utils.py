@@ -21,10 +21,13 @@ def generate_text(system_prompt, user_prompt, model="qwen/qwq-32b:free"):
                 })
             )
             
-            erres = response.json()["error"]
+            erres = response.json()["error"]["message"]
+            
+            
             if not erres:
                 return (str(response.json()["choices"][0]["message"]["content"]).strip(), model)
             else:
+                print(f"LOG ERR OR: {erres}")
                 res, status, model_name = call_g(system_prompt, user_prompt)
                 if status == 200:
                     print(status)
