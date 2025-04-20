@@ -1,5 +1,5 @@
 from .__init__ import *
-from .Utils import generate_text
+from .Utils import generate_story
 from streamlit.components.v1 import html
 
 def text_generation_page():
@@ -16,31 +16,32 @@ def text_generation_page():
         if st.button("🪄 Generate Story"):
             if not user_prompt.strip():
                 st.warning("Please enter a prompt.")
+                
             else:
                 with st.spinner("Generating Story... ⭐"):
                     start_t = time.time()
-                    generate_text(
+                    
+                    res, model, l = generate_story(
                         user_prompt=f"Write a story about: {user_prompt}",
                         system_prompt=system_prompt
                     )
-                    
-                    res, model, l = generate_text(
-                        user_prompt=f"Write a story about: {user_prompt}",
-                        system_prompt=system_prompt
-                    )
-                    
-                    token = res.split(" ")
-                    
-                res_placeholder = st.empty()
-                story = ""
-                    
-                for x in token:
-                    story += x + " "
-                    res_placeholder.markdown(story)
-                    time.sleep(0.02)
                 
-                end_t = time.time() - start_t
-                is_end = True
+                try:
+                    token = res.split(" ")
+                        
+                    res_placeholder = st.empty()
+                    story = ""
+                        
+                    for x in token:
+                        story += x + " "
+                        res_placeholder.markdown(story)
+                        time.sleep(0.02)
+                    
+                    end_t = time.time() - start_t
+                    is_end = True
+                    
+                except Exception as e:
+                    st.error(f"ERROR: {e}")
         
         if is_end: 
             html(f"<script>console.log(\"{l}\");</script>", height=0)
